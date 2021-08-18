@@ -1,0 +1,75 @@
+<h1 mat-dialog-title>Nueva Venta</h1>
+<div mat-dialog-content>
+    <!-- <mat-form-field>
+        <mat-label>Cliente</mat-label>
+        <input type="text" matInput [(ngModel)]="venta.idCliente">
+    </mat-form-field> -->
+    <mat-form-field appearance="outline">
+        <mat-label>Seleccione un cliente</mat-label>
+        <mat-select [(ngModel)]="venta.idCliente" required>
+            <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
+                {{ cliente.nombre }}
+            </mat-option>
+        </mat-select>
+        <!-- <mat-error *ngIf="venta.">Por favor seleccione un cliente</mat-error> -->
+    </mat-form-field>
+
+    <form (ngSubmit)="addConcepto()" [formGroup]="conceptForm">
+
+        <mat-form-field appearance="outline">
+            <mat-label>Seleccione un producto</mat-label>
+            <mat-select formControlName="idProducto" required (selectionChange)="onChange($event.value)">
+                <mat-option *ngFor="let producto of productos" [value]="producto.id">
+                    {{ producto.nombre }}
+                </mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="idProducto.hasError('required')">Por favor seleccione un cliente</mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="width: 100px; margin-left: 10px;">
+            <mat-label>Cantidad</mat-label>
+            <input type="number" min="1" max="nCantidad" matInput formControlName="cantidad" onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;">
+            <mat-hint>Disponible {{ nCantidad }}</mat-hint>
+            <mat-error *ngIf="isValidField('cantidad')">
+                {{getErrorMessage('cantidad')}}
+            </mat-error>
+        </mat-form-field>
+
+        <div>
+            <button type="submit" [disabled]="!conceptForm.valid" mat-raised-button>+</button>
+        </div>
+    </form>
+
+    <div>
+        <h5>Conceptos</h5>
+        <table style="width: 100%;">
+            <tr>
+                <th>Cantidad</th>
+                <th>IVA</th>
+                <th>Precio Unitario</th>
+                <th>Acciones</th>
+            </tr>
+            <tr *ngFor="let item of concepts">
+                <td>{{ item.cantidad }}</td>
+                <td>{{ item.importe }}</td>
+                <td>{{ item.precioUnitario }}</td>
+                <td>
+                    <button mat-icon-button color="primary" (click)="addCantidadProducto(item)">
+                        <mat-icon>add_circle_outline</mat-icon>
+                    </button>
+                    <button mat-icon-button style="margin-left: 10px;" color="warn" (click)="resCantidadProducto(item)">
+                        <mat-icon>remove_circle_outline</mat-icon>
+                    </button>
+                    <button mat-icon-button style="margin-left: 10px;" color="basic" (click)="delProductoConcepto(item)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="close()">Cancelar</button>
+    <button mat-raised-button color="primary" [disabled]="venta.idCliente == null || concepts.length == 0" (click)="addVenta()">Guardar</button>
+</div>

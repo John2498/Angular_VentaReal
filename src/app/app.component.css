@@ -1,0 +1,28 @@
+.global-content{
+    height: 100%;
+    padding: 20px;
+}
+
+.links{
+    margin-left: 10px;
+}
+  
+.example-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+.example-sidenav {
+    padding: 20px;
+  }
+
+button{
+    margin-bottom: 10px;
+}
+
+router-outlet{
+    padding: 10px;
+}
+  

@@ -1,0 +1,76 @@
+<mat-card>
+    <mat-card-title>
+        <h1 mat-dialog-title>{{ cliente != null ? 'Editar Usuario' : 'Nuevo Usuario' }}</h1>
+    </mat-card-title>
+    <mat-card-content>
+        <form [formGroup]="clienteForm" (ngSubmit)="cliente != null ? editCliente() : addCliente()">
+            <p>
+                <mat-form-field >
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="nombre">
+                    <mat-error *ngIf="isValidField('nombre')">
+                        {{getErrorMessage('nombre')}}
+                    </mat-error>
+                </mat-form-field>
+            </p>
+
+            <p>
+                <mat-form-field >
+                    <mat-label>Cédula</mat-label>
+                    <input matInput formControlName="cedula" maxlength="10"
+                    onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;">
+                    <mat-error *ngIf="isValidField('cedula')">
+                        {{getErrorMessage('cedula')}}
+                    </mat-error>
+                </mat-form-field>
+            </p>
+
+            <p>
+                <mat-form-field >
+                    <mat-label>Edad</mat-label>
+                    <input matInput formControlName="edad"
+                    onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;">
+                    <mat-error *ngIf="isValidField('edad')">
+                        {{getErrorMessage('edad')}}
+                    </mat-error>
+                </mat-form-field>
+            </p>
+
+            <p>
+                <mat-form-field >
+                    <mat-label>Teléfono</mat-label>
+                    <input matInput formControlName="telefono" maxlength="10"
+                        onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;">
+                    <mat-error *ngIf="isValidField('telefono')">
+                        {{getErrorMessage('telefono')}}
+                    </mat-error>
+                </mat-form-field>
+            </p>
+
+            <p>
+                <mat-form-field >
+                    <mat-label>Dirección</mat-label>
+                    <input matInput formControlName="direccion" maxlength="25">
+                    <mat-error *ngIf="isValidField('direccion')">
+                        {{getErrorMessage('direccion')}}
+                    </mat-error>
+                </mat-form-field>
+            </p>
+
+            <p>
+                <mat-form-field >
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email">
+                    <mat-error *ngIf="isValidField('email')">
+                        {{getErrorMessage('email')}}
+                    </mat-error>
+                </mat-form-field>
+            </p>
+
+            <div>
+                <button mat-raised-button (click)="close()">Cancelar</button>
+                <button type="submit" [disabled]="!clienteForm.valid" color="primary" mat-raised-button>Guardar</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
