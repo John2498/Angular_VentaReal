@@ -24,7 +24,7 @@ export class DialogVentaComponent{
     public nCantidad = 1;
 
     public conceptForm = this.formBuilder.group({
-        cantidad: [1, [Validators.required, Validators.min(1)]],
+        cantidad: [0, [Validators.required, Validators.min(1)]],
         importe: [null],
         idProducto: [null],
         precioUnitario: [null]
@@ -134,7 +134,7 @@ export class DialogVentaComponent{
         let indexProducto;
 
         this.productos = res.data
-        productoEncontrado = this.productos.find(element => element.cantidad <= 0);
+        productoEncontrado = this.productos.find(element => element.cantidad < 0);
         indexProducto = this.productos.indexOf(productoEncontrado)
         this.productos.splice(indexProducto, 1)
         
